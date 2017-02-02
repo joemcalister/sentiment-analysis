@@ -4,14 +4,18 @@ import string
 
 def main():
     sen = BasicSentimentAnalysis()
-    result = sen.analyse_tweet("Nothing really")
-    
-    print result.majority_emotion
+    result = sen.analyse_text("What is the point of this, I really hate twitter")
+
+    if result.error is None:
+        print result.raw
+    else:
+        print result.error
 
     
 class SentimentResult:
     raw = []
     majority_emotion = []
+    error = None
 
     def __init__(self, results):
         self.raw = results
@@ -30,7 +34,9 @@ class SentimentResult:
 
 class BasicSentimentAnalysis:
     """Basic test of sentiment analysis"""
-    word_dict_filenames = [['negative', 'neg-lex-strip.txt'],['positive', 'pos-lex-strip.txt']];
+    word_dict_filenames = [['negative', 'neg-lex-strip.txt'],
+                           ['positive', 'pos-lex-strip.txt'],
+                           ['angry', 'angry-lex.txt']];
     word_dict = {}
 
     def __init__(self):
@@ -40,41 +46,41 @@ class BasicSentimentAnalysis:
                 temparray = f.readlines()
                 #strip whitespace too
                 temparray = [x.strip() for x in temparray]
-                self.word_dict[filedict[0]] = temparray
-                
+                self.word_dict[filedict[0]] = temparray          
 
-    def analyse_tweet(self,tweet):
+
+    def analyse_text(self,tweet):
         #individual words
         words = tweet.split(' ')
-
         #remove words
         words = self.remove_noise(words)
-
         #get skews
         skews = []
         for current_emotion in self.word_dict:
             returnedArray = self.get_skew(self.word_dict[current_emotion], words)
-            skews.append({"occurences":len(returnedArray),"emotion":current_emotion,"words":"words are here"})
-
+            skews.append({"occurences":len(returnedArray),
+                          "emotion":current_emotion,
+                          "words":"words are here"})
+        #parse final results
         final_results = self.parse_results(skews)
         sen = SentimentResult(final_results)
         return sen
 
 
     def parse_results(self, skews):
-        current_total = 0;
+        res = {}
+        total = 0
         for result in skews:
-            current_total+=result["occurences"]
-
-        results = {}
+            total+=result["occurences"]
+        # get percentages for the emotions
         for result in skews:
-            if (result["occurences"] > 0):
-                val = result["occurences"] / current_total
+            if (total > 0):
+                ## double float cast fixes interesting type bug
+                res[result["emotion"]] = float(float(result["occurences"])/total)
             else:
-                val = 0
-            results[result["emotion"]] = val
+                res[result["emotion"]] = 0;
 
-        return results
+        return res
 
         
     def get_skew(self, current_emotion, sentance):
@@ -84,6 +90,10 @@ class BasicSentimentAnalysis:
             for word in sentance:
                 if word == catword:
                     found_words.append(word)
+                else:
+                    #check for partial words -- !!! this may be problematic !!!
+                    if word.find(catword) != -1:
+                        found_words.append(word)
 
         return found_words
     
@@ -93,14 +103,11 @@ class BasicSentimentAnalysis:
         for index, word in enumerate(words):
             #strip case
             word = word.lower()
-            
             #check for hashtags
             if "#" in word: 
                 word = word.replace("#","")
-
             #remove punctation that may have stuck to words
             word = word.translate(None, string.punctuation)
-
             #set final value
             words[index] = word
 
