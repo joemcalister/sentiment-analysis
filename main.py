@@ -4,11 +4,10 @@ import string
 
 def main():
     sen = BasicSentimentAnalysis()
-    result = sen.analyse_text("I hate trump but love ice cream")
+    result = sen.analyse_text("I hate trump, I'm furious, but love ice cream")
 
     if result.error is None:
         print result.percentages
-        pass
     else:
         print result.error
 
