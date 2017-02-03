@@ -1,5 +1,5 @@
 # Python basic sentiment analysis
-A simple implementation of sentiment analysis using the '(bag-of-words model)[https://en.wikipedia.org/wiki/Bag-of-words_model]'. Designed to be lightweight with a very low computational time. Predominantly designed for small amounts of text, for example tweets.
+A simple implementation of sentiment analysis using the (bag-of-words model)[https://en.wikipedia.org/wiki/Bag-of-words_model]. Designed to be lightweight with a very low computational time. Predominantly designed for small amounts of text, for example tweets.
 
 ## The BasicSentimentAnalysis class
 To initiate the class call,
@@ -8,7 +8,7 @@ sentiment = BasicSentimentAnalysis()
 ```
 To analyse a string call the function analyse_text(), this will return a 'SentimentResult' object,
 ```python
-result = sen.analyse_text("I hate trump, I'm furious, but love ice cream")
+result = sen.analyse_text("I hate Trump, I'm furious, but I love ice cream.")
 ```
 To check if any error occurred simply check the error variable, this should be done whenever creating a new 'SentimentResult' object,
 ```python
@@ -19,13 +19,17 @@ if result.error is None:
 ```
 To get the results of the sentiment analysis use one of the following
 ```python
-# this is the raw data, including everything from words matched, occurrences and different types of mood. Good for debugging
+# this is the raw data, including everything from words matched, 
+# occurrences and different types of mood. Good for debugging
 result.raw
 
-# this returns an array containing the string of the dominant emotion(s) within the text, note - this can be more than one
+# this returns an array containing the string of the dominant 
+# emotion(s) within the text, note - this can be more than one
 result.majority_emotion
 
-# this returns the percentages of emotions within the text (in a dictionary), this is a float within the value of 0.0 and 1.0, the emotion name is the key
+# this returns the percentages of emotions within the text 
+# (in a dictionary), this is a float within the value of 0.0 
+# and 1.0, the emotion name is the key
 result.percentages
 ```
 
