@@ -46,4 +46,4 @@ International World Wide Web conference (WWW-2005), May 10-14,
 
 The word list file 'angry-lex.txt' was created by me.
 
-![alt tag](https://joemcalister.com/img/git/logo.png)
+->![alt tag](https://joemcalister.com/img/git/logo.png)<-
