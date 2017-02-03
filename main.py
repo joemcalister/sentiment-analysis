@@ -4,7 +4,7 @@ import string
 
 def main():
     sen = BasicSentimentAnalysis()
-    result = sen.analyse_text("I hate trump, I'm furious, but love ice cream")
+    result = sen.analyse_text("I hate Trump, I'm furious, but I love ice cream.")
 
     if result.error is None:
         print result.percentages
@@ -49,9 +49,9 @@ class SentimentResult:
 
 class BasicSentimentAnalysis:
     """Basic test of sentiment analysis"""
-    word_dict_filenames = [['negative', 'neg-lex-strip.txt'],
-                           ['positive', 'pos-lex-strip.txt'],
-                           ['angry', 'angry-lex.txt']];
+    word_dict_filenames = [['negative', 'lists/neg-lex-strip.txt'],
+                           ['positive', 'lists/pos-lex-strip.txt'],
+                           ['angry', 'lists/angry-lex.txt']];
     word_dict = {}
 
     def __init__(self):
