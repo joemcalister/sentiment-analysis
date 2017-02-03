@@ -2,38 +2,50 @@
 import csv
 import string
 
-# TO DO
-# > 
 def main():
     sen = BasicSentimentAnalysis()
     result = sen.analyse_text("I hate trump but love ice cream")
 
     if result.error is None:
-        print result.raw
+        print result.percentages
+        pass
     else:
         print result.error
 
-
-        
+       
 #### SENTIMENT CLASS ####        
 class SentimentResult:
     raw = []
     majority_emotion = []
+    percentages = {}
     error = None
 
     def __init__(self, results):
         self.raw = results
 
+        # majority emotion
         current_highest = 0
-        for emotion in list(results.keys()):
-            if results[emotion] > current_highest:
-                current_highest = results[emotion]
+        for dictionary in results:
+            if int(dictionary["occurences"]) > current_highest:
+                current_highest = int(dictionary["occurences"])
         if current_highest > 0:
-            for emotion in list(results.keys()):
-                if results[emotion] == current_highest:
-                    self.majority_emotion.append(emotion)
+            for dictionary in results:
+                if int(dictionary["occurences"]) == current_highest:
+                     self.majority_emotion.append(dictionary["emotion"])
         else:
-            self.majority_emotion = ['neutral']
+            self.majority_emotion = ['undetermined']
+
+        # percentages
+        total = 0
+        for result in results:
+            total+=result["occurences"]
+        # get percentages for the emotions
+        for result in results:
+            if (total > 0):
+                ## double float cast fixes interesting type bug
+                self.percentages[result["emotion"]] = float(float(result["occurences"])/total)
+            else:
+                self.percentages[result["emotion"]] = 0;
 
 
 class BasicSentimentAnalysis:
@@ -66,25 +78,8 @@ class BasicSentimentAnalysis:
                           "emotion":current_emotion,
                           "words":"words are here"})
         #parse final results
-        final_results = self.parse_results(skews)
-        sen = SentimentResult(final_results)
+        sen = SentimentResult(skews)
         return sen
-
-
-    def parse_results(self, skews):
-        res = {}
-        total = 0
-        for result in skews:
-            total+=result["occurences"]
-        # get percentages for the emotions
-        for result in skews:
-            if (total > 0):
-                ## double float cast fixes interesting type bug
-                res[result["emotion"]] = float(float(result["occurences"])/total)
-            else:
-                res[result["emotion"]] = 0;
-
-        return res
 
         
     def get_skew(self, current_emotion, sentance):
