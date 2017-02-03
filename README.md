@@ -1,5 +1,5 @@
 # Python basic sentiment analysis
-A simple implementation of sentiment analysis using the '[bag-of-words model](https://en.wikipedia.org/wiki/Bag-of-words_model)'. Designed to be lightweight with a very low computational time. Predominantly designed for small amounts of text, for example tweets.
+A simple implementation of sentiment analysis using the '[bag-of-words model](https://en.wikipedia.org/wiki/Bag-of-words_model)'. Designed to be lightweight with a very low computational time. Predominantly designed for small amounts of text. For example, tweets.
 
 ## The BasicSentimentAnalysis class
 To initiate the class call
