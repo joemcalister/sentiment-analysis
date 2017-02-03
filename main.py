@@ -2,16 +2,20 @@
 import csv
 import string
 
+# TO DO
+# > 
 def main():
     sen = BasicSentimentAnalysis()
-    result = sen.analyse_text("What is the point of this, I really hate twitter")
+    result = sen.analyse_text("I hate trump but love ice cream")
 
     if result.error is None:
         print result.raw
     else:
         print result.error
 
-    
+
+        
+#### SENTIMENT CLASS ####        
 class SentimentResult:
     raw = []
     majority_emotion = []
