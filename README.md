@@ -1,16 +1,16 @@
 # Python basic sentiment analysis
-A simple implementation of sentiment analysis using the (bag-of-words model)[https://en.wikipedia.org/wiki/Bag-of-words_model]. Designed to be lightweight with a very low computational time. Predominantly designed for small amounts of text, for example tweets.
+A simple implementation of sentiment analysis using the '[bag-of-words model](https://en.wikipedia.org/wiki/Bag-of-words_model)'. Designed to be lightweight with a very low computational time. Predominantly designed for small amounts of text, for example tweets.
 
 ## The BasicSentimentAnalysis class
-To initiate the class call,
+To initiate the class call
 ```python
 sentiment = BasicSentimentAnalysis()
 ```
-To analyse a string call the function analyse_text(), this will return a 'SentimentResult' object,
+To analyse a string call the function analyse_text(), this will return a 'SentimentResult' object
 ```python
 result = sen.analyse_text("I hate Trump, I'm furious, but I love ice cream.")
 ```
-To check if any error occurred simply check the error variable, this should be done whenever creating a new 'SentimentResult' object,
+To check if any error occurred simply check the error variable, this should be done whenever creating a new 'SentimentResult' object
 ```python
 if result.error is None:
         print result.percentages
