@@ -62,7 +62,8 @@ class BasicSentimentAnalysis:
     word_dict_filenames = [['negative', 'lists/neg-lex-strip.txt'],
                            ['positive', 'lists/pos-lex-strip.txt'],
                            ['angry', 'lists/angry-lex.txt'],
-                           ['sad', 'lists/sad-lex.txt']];
+                           ['sad', 'lists/sad-lex.txt'],
+                           ['worried', 'lists/worried-lex.txt']];
     word_dict = {}
 
     def __init__(self):

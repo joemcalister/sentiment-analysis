@@ -1,5 +1,5 @@
 # Python Sentiment Analysis
-A simple implementation of sentiment analysis using the '[bag-of-words model](https://en.wikipedia.org/wiki/Bag-of-words_model)'. Designed to be lightweight with a very low computational time. Predominantly designed for small amounts of text. For example, tweets. It can currently detect, positivity, negativity, anger and sadness.
+A simple implementation of sentiment analysis using the '[bag-of-words model](https://en.wikipedia.org/wiki/Bag-of-words_model)'. Designed to be lightweight with a very low computational time. Predominantly designed for small amounts of text. For example, tweets. It can currently detect, positivity, negativity, anger, worry and sadness
 
 ## The BasicSentimentAnalysis class
 To initiate the class call
@@ -48,4 +48,4 @@ and Comparing Opinions on the Web." Proceedings of the 14th
 International World Wide Web conference (WWW-2005), May 10-14, 
 2005, Chiba, Japan.
 
-The word list file 'angry-lex.txt' and 'sad-lex.txt' was created by me.
+The word list file 'angry-lex.txt', 'sad-lex.txt' and 'worry-lex.txt' was created by me.
