@@ -1,13 +1,14 @@
 #!/usr/bin/python
 import csv
 import string
+import decimal
 
 def main():
     sen = BasicSentimentAnalysis()
-    result = sen.analyse_text("I hate Trump, I'm furious, but I love ice cream.")
+    result = sen.analyse_text("I hate Trump, I'm furious, but I love ice cream. Such a saddening moment.")
 
     if result.error is None:
-        print result.percentages
+        print result.decimals
     else:
         print result.error
 
@@ -16,7 +17,7 @@ def main():
 class SentimentResult:
     raw = []
     majority_emotion = []
-    percentages = {}
+    decimals = {}
     error = None
 
     def __init__(self, results):
@@ -34,24 +35,34 @@ class SentimentResult:
         else:
             self.majority_emotion = ['undetermined']
 
-        # percentages
+        # decimals
         total = 0
         for result in results:
             total+=result["occurences"]
-        # get percentages for the emotions
+        # get decimal values for the amount of emotions
         for result in results:
             if (total > 0):
                 ## double float cast fixes interesting type bug
-                self.percentages[result["emotion"]] = float(float(result["occurences"])/total)
+                ## round to two decimal places
+                self.decimals[result["emotion"]] = round(decimal.Decimal(float(float(result["occurences"])/total)),2)
             else:
-                self.percentages[result["emotion"]] = 0;
+                self.decimals[result["emotion"]] = 0;
+
+
+    def words_for_emotion(self,emotion):
+        for emotions in self.raw:
+            if emotions["emotion"] == emotion:
+                return emotions["words"]
+        return []
+
 
 
 class BasicSentimentAnalysis:
     """Basic test of sentiment analysis"""
     word_dict_filenames = [['negative', 'lists/neg-lex-strip.txt'],
                            ['positive', 'lists/pos-lex-strip.txt'],
-                           ['angry', 'lists/angry-lex.txt']];
+                           ['angry', 'lists/angry-lex.txt'],
+                           ['sad', 'lists/sad-lex.txt']];
     word_dict = {}
 
     def __init__(self):
@@ -62,7 +73,6 @@ class BasicSentimentAnalysis:
                 #strip whitespace too
                 temparray = [x.strip() for x in temparray]
                 self.word_dict[filedict[0]] = temparray          
-
 
     def analyse_text(self,tweet):
         #individual words
@@ -75,7 +85,7 @@ class BasicSentimentAnalysis:
             returnedArray = self.get_skew(self.word_dict[current_emotion], words)
             skews.append({"occurences":len(returnedArray),
                           "emotion":current_emotion,
-                          "words":"words are here"})
+                          "words":returnedArray})
         #parse final results
         sen = SentimentResult(skews)
         return sen
