@@ -5,7 +5,7 @@ import decimal
 
 def main():
     sen = BasicSentimentAnalysis()
-    result = sen.analyse_text("I hate Trump, I'm furious, but I love ice cream. Such a saddening moment.")
+    result = sen.analyse_text("I hate Trump, I'm furious, but I love ice cream. Such a saddening, frightning, moment.")
 
     if result.error is None:
         print result.decimals
@@ -63,7 +63,8 @@ class BasicSentimentAnalysis:
                            ['positive', 'lists/pos-lex-strip.txt'],
                            ['angry', 'lists/angry-lex.txt'],
                            ['sad', 'lists/sad-lex.txt'],
-                           ['worried', 'lists/worried-lex.txt']];
+                           ['worried', 'lists/worried-lex.txt'],
+                           ['scared', 'lists/scared-lex.txt']];
     word_dict = {}
 
     def __init__(self):
