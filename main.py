@@ -8,7 +8,7 @@ def main():
     result = sen.analyse_text("I hate Trump, I'm furious, but I love ice cream. Such a saddening, frightning, moment.")
 
     if result.error is None:
-        print result.decimals
+        print result.majority_emotions
     else:
         print result.error
 
@@ -16,7 +16,7 @@ def main():
 #### SENTIMENT CLASS ####        
 class SentimentResult:
     raw = []
-    majority_emotion = []
+    majority_emotions = []
     decimals = {}
     error = None
 
@@ -31,9 +31,9 @@ class SentimentResult:
         if current_highest > 0:
             for dictionary in results:
                 if int(dictionary["occurences"]) == current_highest:
-                     self.majority_emotion.append(dictionary["emotion"])
+                     self.majority_emotions.append(dictionary["emotion"])
         else:
-            self.majority_emotion = ['undetermined']
+            self.majority_emotions = ['neutral']
 
         # decimals
         total = 0
@@ -66,7 +66,7 @@ class BasicSentimentAnalysis:
                            ['worried', 'lists/worried-lex.txt'],
                            ['scared', 'lists/scared-lex.txt']];
     word_dict = {}
-
+    
     def __init__(self):
         #load in our word dictionaries
         for filedict in self.word_dict_filenames:
